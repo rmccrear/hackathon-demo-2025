@@ -1,17 +1,55 @@
-
+import { useState } from 'react'
 import './App.css'
+import Home from './pages/Home'
+import Gallery from './pages/Gallery'
+import Select from './pages/Select'
 
 import data from './data/data.json'
-console.log(data[45].Name)
-console.log(data[45].Image)
-console.log(data[45].Temperament)
+console.log(data)
+
+/*
+ * Variables needed: 
+ * currentPage: a string - "home", "gallery", or "select"
+ * pageContent: the JSX that I will use to fill the page.
+ */
 
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("home")
+
+  function goToHomePage() {
+    setCurrentPage("home")
+  }
+  function goToGalleryPage() {
+    setCurrentPage("gallery")
+  }
+  function goToSelectPage() {
+    setCurrentPage("select")
+  }
+  console.log(currentPage)
+
+  let pageContent = <Home />
+
+  if (currentPage === "home") {
+    pageContent = <Home />
+  } else if (currentPage === "select") {
+    pageContent = <Select />
+  } else if(currentPage === "gallery") {
+    pageContent = <Gallery />
+  }
 
   return (
     <>
-      <h1>Cats</h1>
+      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+        <h1>Cats</h1>
+        <nav>
+          <button type="button" onClick={goToHomePage}>Home</button>
+          <button type="button" onClick={goToGalleryPage}>Gallery</button>
+          <button type="button" onClick={goToSelectPage}>Select</button>
+        </nav>
+      </div>
+      
+      {pageContent}
 
     </>
   )
