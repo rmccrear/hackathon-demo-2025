@@ -1,49 +1,56 @@
 import { useState } from 'react'
 import './App.css'
+import Home from './pages/Home'
+import Gallery from './pages/Gallery'
+import Select from './pages/Select'
 
 import data from './data/data.json'
-console.log(data[45].Name)
-console.log(data[45].Image)
-console.log(data[45].Temperament)
+console.log(data)
+
+/*
+ * Variables needed: 
+ * currentPage: a string - "home", "gallery", or "select"
+ * pageContent: the JSX that I will use to fill the page.
+ */
 
 
 function App() {
-  const [index, setIndex] = useState(0)
+  const [currentPage, setCurrentPage] = useState("home")
 
-  function handleNextCat() {
-    if(index<data.length-1){
-      setIndex(index+1)
-    }
+  function goToHomePage() {
+    setCurrentPage("home")
   }
-
-  // reduce
-  let count = 0;
-
-
-  // Map all the cats...
-  let catListJSX = []
-  // for each cat, get the name and put it in the array as JSX
-  // <li> {cat.Name} </li>
-  for(let i=0; i<data.length; i++) {
-    const cat = data[i]
-    console.log(cat.Name)
-    catListJSX.push(<li> {cat.Name} </li>)
+  function goToGalleryPage() {
+    setCurrentPage("gallery")
   }
-  // catListJSX = data.map(item => <li> {item.Name} </li>)
+  function goToSelectPage() {
+    setCurrentPage("select")
+  }
+  console.log(currentPage)
+
+  let pageContent = <Home data={data} />
+
+  if (currentPage === "home") {
+    pageContent = <Home data={data} />
+  } else if (currentPage === "select") {
+    pageContent = <Select data={data} />
+  } else if(currentPage === "gallery") {
+    pageContent = <Gallery data={data} />
+  }
 
   return (
     <>
-      <h1>Cat index number {index}</h1>
-      <div className="button-container">
-        <button type="button">Previous</button>
-        <button type="button" onClick={handleNextCat}>Forward Feline</button>
+      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+        <h1>Cats</h1>
+        <nav>
+          <button type="button" onClick={goToHomePage}>Home</button>
+          <button type="button" onClick={goToGalleryPage}>Gallery</button>
+          <button type="button" onClick={goToSelectPage}>Select</button>
+        </nav>
       </div>
-      <h2>{data[index].Name}</h2>
-      <p>{data[index].Temperament}</p>
-      <img className="cat-picture" src={data[index].Image} />
-      <ul>
-        {catListJSX}
-      </ul>
+      
+      {pageContent}
+
     </>
   )
 }
