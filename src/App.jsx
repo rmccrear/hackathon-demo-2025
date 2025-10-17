@@ -28,14 +28,14 @@ function App() {
   }
   console.log(currentPage)
 
-  let pageContent = <Home />
+  let pageContent = <Home data={data} />
 
   if (currentPage === "home") {
-    pageContent = <Home />
+    pageContent = <Home data={data} />
   } else if (currentPage === "select") {
-    pageContent = <Select />
+    pageContent = <Select data={data} />
   } else if(currentPage === "gallery") {
-    pageContent = <Gallery />
+    pageContent = <Gallery data={data} />
   }
 
   return (
