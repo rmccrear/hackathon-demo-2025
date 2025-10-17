@@ -1,7 +1,8 @@
+import HeroImage from "../components/HeroImage"
 
 export default function Home({data}) {
     return (<>
-        <h1>Home</h1>
+        <HeroImage />
         <p>This is my home page</p>
     </>)
 }
